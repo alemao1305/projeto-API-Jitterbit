@@ -90,22 +90,23 @@ CMD ["npm", "start"]
 ### 2️⃣ Docker Compose
 
 ```yaml
-version: "3"
+version: "3.9"
 
 services:
-  api:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_URL=mongodb://mongo:27017/pedidos
-
-  mongo:
-    image: mongo
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: always
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
 ```
 
 ### 3️⃣ Comando
